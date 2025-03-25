@@ -1,0 +1,51 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<h1> Home Page</h1>
+
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li> {{ message }} </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endwith %}
+
+<form class="col-12 d-flex justify-content-around" action="/new" method="post">
+    <input class="form-control w-[33vw]" type="text" name="name" id="name" placeholder="Ingresa tu nombre" />
+    <input class="form-control w-[33vw]" type="text" name="email" id="email" placeholder="Ingresa tu email" />
+    <input class="form-control w-[33vw]" type="text" name="phone" id="phone" placeholder="Agrega un telefono" />  
+
+    <button class="btn btn-success w-[20vw]" type="submit"> enviar </button>
+</form>
+
+<div>
+
+    <table class="table table-striped">
+        <thead>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Telefono</th>
+            <th></th>
+        </thead>
+        <tbody>
+            {% for contact in contacts %}
+                <tr>
+                    <td> {{contact.name}} </td>
+                    <td> {{contact.email}} </td>
+                    <td> {{contact.phone}} </td>
+                    <td>
+                        <a class="btn btn-primary" href="{{ url_for('contacts.update', id=contact.id) }}">update</a>
+                        <a class="btn btn-danger" href="{{ url_for('contacts.delete', id=contact.id) }}">delete</a>
+                        
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
